@@ -8,8 +8,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include "c:/users/perso/CLionProjects/untitled1/libs/algorithms/unordered_array_set.h"
-#include "c:/users/perso/CLionProjects/untitled1/libs/algorithms/array/array.h"
+#include "c:/users/perso/CLionProjects/sets_project/libs/algorithms/unordered_array_set.h"
+#include "c:/users/perso/CLionProjects/sets_project/libs/algorithms/array/array.h"
 
 typedef struct ordered_array_set {
     int *data; //элементы множества
