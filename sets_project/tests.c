@@ -16,9 +16,16 @@ void test_unordered_array_set_create2() {
     assert(set1.capacity == 3);
 }
 
+void test_unordered_array_set_create3() {
+    unordered_array_set set1 = unordered_array_set_create(8);
+    assert(set1.size == 0);
+    assert(set1.capacity == 8);
+}
+
 void test_unordered_array_set_create() {
     test_unordered_array_set_create1();
     test_unordered_array_set_create2();
+    test_unordered_array_set_create3();
 }
 
 void test_unordered_array_set_in1() {
@@ -37,9 +44,18 @@ void test_unordered_array_set_in2() {
     assert (resSet == index);
 }
 
+void test_unordered_array_set_in3() {
+    unordered_array_set set1 = unordered_array_set_create_from_array((int[]) {-3, 57, 48, 0, 7, 2}, 7);
+    int value = 2;
+    long long resSet = unordered_array_set_in(&set1, value);
+    int index = 5;
+    assert (resSet == index);
+}
+
 void test_unordered_array_set_in() {
     test_unordered_array_set_in1();
     test_unordered_array_set_in2();
+    test_unordered_array_set_in3();
 }
 
 void test_unordered_array_set_isEqual1() {
@@ -60,9 +76,18 @@ void test_unordered_array_set_isEqual2() {
     assert (resSet == expectedRes);
 }
 
+void test_unordered_array_set_isEqual3() {
+    unordered_array_set set1 = unordered_array_set_create_from_array((int[]) {1, 2, 3}, 3);
+    unordered_array_set set2 = unordered_array_set_create_from_array((int[]) {3, 2, 1}, 3);
+    bool resSet = unordered_array_set_isEqual(set1, set2);
+    bool expectedRes = true;
+    assert (resSet == expectedRes);
+}
+
 void test_unordered_array_set_isEqual() {
     test_unordered_array_set_isEqual1();
     test_unordered_array_set_isEqual2();
+    test_unordered_array_set_isEqual3();
 }
 
 void test_unordered_array_set_insert1() {
@@ -90,9 +115,21 @@ void test_unordered_array_set_insert2() {
     unordered_array_set_delete(expectedSet);
 }
 
+void test_unordered_array_set_insert3() {
+    unordered_array_set set1 = unordered_array_set_create(1);
+    unordered_array_set_insert(&set1, 0);
+    unordered_array_set expectedSet = unordered_array_set_create_from_array((int[]) {0}, 1);
+
+    assert(unordered_array_set_isEqual(set1, expectedSet));
+
+    unordered_array_set_delete(set1);
+    unordered_array_set_delete(expectedSet);
+}
+
 void test_unordered_array_set_insert() {
     test_unordered_array_set_insert1();
     test_unordered_array_set_insert2();
+    test_unordered_array_set_insert3();
 }
 
 void test_unordered_array_set_deleteElement1() {
@@ -117,9 +154,21 @@ void test_unordered_array_set_deleteElement2() {
     unordered_array_set_delete(expectedSet);
 }
 
+void test_unordered_array_set_deleteElement3() {
+    unordered_array_set set1 = unordered_array_set_create_from_array((int[]) {1, 2, 3, 96}, 4);
+    unordered_array_set_deleteElement(&set1, 1);
+    unordered_array_set expectedSet = unordered_array_set_create_from_array((int[]) {2, 3, 96}, 3);
+
+    assert (unordered_array_set_isEqual(set1, expectedSet));
+
+    unordered_array_set_delete(set1);
+    unordered_array_set_delete(expectedSet);
+}
+
 void test_unordered_array_set_deleteElement() {
     test_unordered_array_set_deleteElement1();
     test_unordered_array_set_deleteElement2();
+    test_unordered_array_set_deleteElement3();
 }
 
 void test_unordered_array_set_union1() {
@@ -150,9 +199,24 @@ void test_unordered_array_set_union2() {
     unordered_array_set_delete(expectedSet);
 }
 
+void test_unordered_array_set_union3() {
+    unordered_array_set set1 = unordered_array_set_create_from_array((int[]) {1, 2, 3}, 3);
+    unordered_array_set set2 = unordered_array_set_create_from_array((int[]) {3, 4, 1, 2}, 4);
+    unordered_array_set resSet = unordered_array_set_union(set1, set2);
+    unordered_array_set expectedSet = unordered_array_set_create_from_array((int[]) {1, 2, 3, 4}, 4);
+
+    assert (unordered_array_set_isEqual(resSet, expectedSet));
+
+    unordered_array_set_delete(set1);
+    unordered_array_set_delete(set2);
+    unordered_array_set_delete(resSet);
+    unordered_array_set_delete(expectedSet);
+}
+
 void test_unordered_array_set_union() {
     test_unordered_array_set_union1();
     test_unordered_array_set_union2();
+    test_unordered_array_set_union3();
 }
 
 void test_unordered_array_set_intersection1() {
@@ -183,9 +247,24 @@ void test_unordered_array_set_intersection2() {
     unordered_array_set_delete(expectedSet);
 }
 
+void test_unordered_array_set_intersection3() {
+    unordered_array_set set1 = unordered_array_set_create_from_array((int[]) {-3, 4, 22, 8, 4}, 5);
+    unordered_array_set set2 = unordered_array_set_create_from_array((int[]) {5, 1, 2}, 3);
+    unordered_array_set resSet = unordered_array_set_intersection(set1, set2);
+    unordered_array_set expectedSet = unordered_array_set_create_from_array((int[]) {}, 0);
+
+    assert (unordered_array_set_isEqual(resSet, expectedSet));
+
+    unordered_array_set_delete(set1);
+    unordered_array_set_delete(set2);
+    unordered_array_set_delete(resSet);
+    unordered_array_set_delete(expectedSet);
+}
+
 void test_unordered_array_set_intersection() {
     test_unordered_array_set_intersection1();
     test_unordered_array_set_intersection2();
+    test_unordered_array_set_intersection3();
 }
 
 void test_unordered_array_set_difference1() {
@@ -216,9 +295,24 @@ void test_unordered_array_set_difference2() {
     unordered_array_set_delete(expectedSet);
 }
 
+void test_unordered_array_set_difference3() {
+    unordered_array_set set1 = unordered_array_set_create_from_array((int[]) {3, 1, -4, 5, 7, 9}, 6);
+    unordered_array_set set2 = unordered_array_set_create_from_array((int[]) {-4, 5, 7, 9, 3}, 5);
+    unordered_array_set resSet = unordered_array_set_difference(set1, set2);
+    unordered_array_set expectedSet = unordered_array_set_create_from_array((int[]) {1}, 1);
+
+    assert (unordered_array_set_isEqual(resSet, expectedSet));
+
+    unordered_array_set_delete(set1);
+    unordered_array_set_delete(set2);
+    unordered_array_set_delete(resSet);
+    unordered_array_set_delete(expectedSet);
+}
+
 void test_unordered_array_set_difference() {
     test_unordered_array_set_difference1();
     test_unordered_array_set_difference2();
+    test_unordered_array_set_difference3();
 }
 
 void test_unordered_array_set_symmetricDifference1() {
@@ -249,9 +343,24 @@ void test_unordered_array_set_symmetricDifference2() {
     unordered_array_set_delete(expectedSet);
 }
 
+void test_unordered_array_set_symmetricDifference3() {
+    unordered_array_set set1 = unordered_array_set_create_from_array((int[]) {-4, -5, 5, 6, -2}, 5);
+    unordered_array_set set2 = unordered_array_set_create_from_array((int[]) {-2, 6, 5, -5, -4}, 5);
+    unordered_array_set resSet = unordered_array_set_symmetricDifference(set1, set2);
+    unordered_array_set expectedSet = unordered_array_set_create_from_array((int[]) {}, 0);
+
+    assert (unordered_array_set_isEqual(resSet, expectedSet));
+
+    unordered_array_set_delete(set1);
+    unordered_array_set_delete(set2);
+    unordered_array_set_delete(resSet);
+    unordered_array_set_delete(expectedSet);
+}
+
 void test_unordered_array_set_symmetricDifference() {
     test_unordered_array_set_symmetricDifference1();
     test_unordered_array_set_symmetricDifference2();
+    test_unordered_array_set_symmetricDifference3();
 }
 
 void test_unordered_array_set_complement1() {
@@ -283,9 +392,23 @@ void test_unordered_array_set_complement2() {
     unordered_array_set_delete(resSet);
 }
 
+void test_unordered_array_set_complement3() {
+    unordered_array_set set1 = unordered_array_set_create_from_array((int[]) {9, 0, 2}, 3);
+    unordered_array_set set2 = unordered_array_set_create_from_array((int[]) {2, 0, 9, -1}, 4);
+    unordered_array_set resSet = unordered_array_set_complement(set1, set2);
+
+    assert(resSet.data[0] == -1);
+    assert(resSet.size == 1);
+
+    unordered_array_set_delete(set1);
+    unordered_array_set_delete(set2);
+    unordered_array_set_delete(resSet);
+}
+
 void test_unordered_array_set_complement() {
     test_unordered_array_set_complement1();
     test_unordered_array_set_complement2();
+    test_unordered_array_set_complement3();
 }
 
 void test_unordered_array_set_isSubset1() {
@@ -308,9 +431,20 @@ void test_unordered_array_set_isSubset2() {
     unordered_array_set_delete(set2);
 }
 
+void test_unordered_array_set_isSubset3() {
+    unordered_array_set set1 = unordered_array_set_create_from_array((int[]) {3, 4, 5}, 3);
+    unordered_array_set set2 = unordered_array_set_create_from_array((int[]) {3, 5, 4, 1}, 4);
+
+    assert (unordered_array_set_isSubset(set1, set2));
+
+    unordered_array_set_delete(set1);
+    unordered_array_set_delete(set2);
+}
+
 void test_unordered_array_set_isSubset() {
     test_unordered_array_set_isSubset1();
     test_unordered_array_set_isSubset2();
+    test_unordered_array_set_isSubset3();
 }
 
 
@@ -367,17 +501,28 @@ void test_ordered_array_set_isSubset2() {
     ordered_array_set_delete(set);
 }
 
+void test_ordered_array_set_isSubset3() {
+    ordered_array_set subset = ordered_array_set_create_from_array((int[]) {8, 9}, 2);
+    ordered_array_set set = ordered_array_set_create_from_array((int[]) {1, 2, 3, 6, 8, 9}, 6);
+
+    assert (ordered_array_set_isSubset(subset, set));
+
+    ordered_array_set_delete(subset);
+    ordered_array_set_delete(set);
+}
+
 void test_ordered_array_set_isSubset() {
     test_ordered_array_set_isSubset1();
     test_ordered_array_set_isSubset2();
+    test_ordered_array_set_isSubset3();
 }
 
 void test_ordered_array_set_insert1() {
     ordered_array_set set1 = ordered_array_set_create(8);
     ordered_array_set_insert(&set1, 10);
     ordered_array_set_insert(&set1, 8);
-
     ordered_array_set expectedSet = ordered_array_set_create_from_array((int[]) {8, 10}, 2);
+
     assert(ordered_array_set_isEqual(set1, expectedSet));
 
     ordered_array_set_delete(set1);
@@ -389,8 +534,22 @@ void test_ordered_array_set_insert2() {
     ordered_array_set_insert(&set1, 6);
     ordered_array_set_insert(&set1, -1);
     ordered_array_set_insert(&set1, 4);
-
     ordered_array_set expectedSet = ordered_array_set_create_from_array((int[]) {-1, 4, 6}, 3);
+
+    assert(ordered_array_set_isEqual(set1, expectedSet));
+
+    ordered_array_set_delete(set1);
+    ordered_array_set_delete(expectedSet);
+}
+
+void test_ordered_array_set_insert3() {
+    ordered_array_set set1 = ordered_array_set_create(5);
+    ordered_array_set_insert(&set1, 0);
+    ordered_array_set_insert(&set1, -16);
+    ordered_array_set_insert(&set1, 20);
+    ordered_array_set_insert(&set1, 9);
+    ordered_array_set expectedSet = ordered_array_set_create_from_array((int[]) {-16, 0, 9, 20}, 4);
+
     assert(ordered_array_set_isEqual(set1, expectedSet));
 
     ordered_array_set_delete(set1);
@@ -400,6 +559,7 @@ void test_ordered_array_set_insert2() {
 void test_ordered_array_set_insert() {
     test_ordered_array_set_insert1();
     test_ordered_array_set_insert2();
+    test_ordered_array_set_insert3();
 }
 
 void test_ordered_array_set_deleteElement1() {
@@ -424,9 +584,21 @@ void test_ordered_array_set_deleteElement2() {
     ordered_array_set_delete(expectedSet);
 }
 
+void test_ordered_array_set_deleteElement3() {
+    ordered_array_set set1 = ordered_array_set_create_from_array((int[]) {1, 6, 3, 88}, 4);
+    ordered_array_set_deleteElement(&set1, 1);
+    ordered_array_set expectedSet = ordered_array_set_create_from_array((int[]) {6, 3, 88}, 3);
+
+    assert (ordered_array_set_isEqual(set1, expectedSet));
+
+    ordered_array_set_delete(set1);
+    ordered_array_set_delete(expectedSet);
+}
+
 void test_ordered_array_set_deleteElement() {
     test_ordered_array_set_deleteElement1();
     test_ordered_array_set_deleteElement2();
+    test_ordered_array_set_deleteElement3();
 }
 
 void test_ordered_array_set_union1() {
@@ -451,6 +623,19 @@ void test_ordered_array_set_union2() {
 
     assert (ordered_array_set_isEqual(resSet, expectedSet));
 
+    ordered_array_set_delete(set1);
+    ordered_array_set_delete(set2);
+    ordered_array_set_delete(resSet);
+    ordered_array_set_delete(expectedSet);
+}
+
+void test_ordered_array_set_union3() {
+    ordered_array_set set1 = ordered_array_set_create_from_array((int[]) {-11, 0, 9}, 3);
+    ordered_array_set set2 = ordered_array_set_create_from_array((int[]) {-11, -2, -1, 3}, 4);
+    ordered_array_set resSet = ordered_array_set_union(set1, set2);
+    ordered_array_set expectedSet = ordered_array_set_create_from_array((int[]) {-11, -2, -1, 0, 3, 9}, 6);
+
+    assert (ordered_array_set_isEqual(resSet, expectedSet));
 
     ordered_array_set_delete(set1);
     ordered_array_set_delete(set2);
@@ -461,6 +646,7 @@ void test_ordered_array_set_union2() {
 void test_ordered_array_set_union() {
     test_ordered_array_set_union1();
     test_ordered_array_set_union2();
+    test_ordered_array_set_union3();
 }
 
 void test_ordered_array_set_intersection1() {
@@ -470,7 +656,6 @@ void test_ordered_array_set_intersection1() {
     ordered_array_set expectedSet = ordered_array_set_create_from_array((int[]) {1, 4, 6}, 3);
 
     assert (ordered_array_set_isEqual(resSet, expectedSet));
-
 
     ordered_array_set_delete(set1);
     ordered_array_set_delete(set2);
@@ -483,6 +668,21 @@ void test_ordered_array_set_intersection2() {
     ordered_array_set set2 = ordered_array_set_create_from_array((int[]) {5, 1, 2}, 3);
     ordered_array_set resSet = ordered_array_set_intersection(set1, set2);
     ordered_array_set expectedSet = ordered_array_set_create_from_array((int[]) {2}, 1);
+
+    assert (ordered_array_set_isEqual(resSet, expectedSet));
+
+    ordered_array_set_delete(set1);
+    ordered_array_set_delete(set2);
+    ordered_array_set_delete(resSet);
+    ordered_array_set_delete(expectedSet);
+}
+
+void test_ordered_array_set_intersection3() {
+    ordered_array_set set1 = ordered_array_set_create_from_array((int[]) {-3, 4, 22, 8, 4}, 5);
+    ordered_array_set set2 = ordered_array_set_create_from_array((int[]) {5, 1, 2}, 3);
+    ordered_array_set resSet = ordered_array_set_intersection(set1, set2);
+    ordered_array_set expectedSet = ordered_array_set_create_from_array((int[]) {}, 0);
+
     assert (ordered_array_set_isEqual(resSet, expectedSet));
 
     ordered_array_set_delete(set1);
@@ -494,6 +694,7 @@ void test_ordered_array_set_intersection2() {
 void test_ordered_array_set_intersection() {
     test_ordered_array_set_intersection1();
     test_ordered_array_set_intersection2();
+    test_ordered_array_set_intersection3();
 }
 
 void test_ordered_array_set_difference1() {
@@ -524,9 +725,24 @@ void test_ordered_array_set_difference2() {
     ordered_array_set_delete(expectedSet);
 }
 
+void test_ordered_array_set_difference3() {
+    ordered_array_set set1 = ordered_array_set_create_from_array((int[]) {-11, -4, 4, 9, 10}, 5);
+    ordered_array_set set2 = ordered_array_set_create_from_array((int[]) {2, 6, 67, 99}, 4);
+    ordered_array_set resSet = ordered_array_set_difference(set1, set2);
+    ordered_array_set expectedSet = ordered_array_set_create_from_array((int[]) {-11, -4, 4, 9, 10}, 5);
+
+    assert (ordered_array_set_isEqual(resSet, expectedSet));
+
+    ordered_array_set_delete(set1);
+    ordered_array_set_delete(set2);
+    ordered_array_set_delete(resSet);
+    ordered_array_set_delete(expectedSet);
+}
+
 void test_ordered_array_set_difference() {
     test_ordered_array_set_difference1();
     test_ordered_array_set_difference2();
+    test_ordered_array_set_difference3();
 }
 
 void test_ordered_array_set_symmetricDifference1() {
@@ -549,6 +765,21 @@ void test_ordered_array_set_symmetricDifference2() {
     ordered_array_set set2 = ordered_array_set_create_from_array((int[]) {1, 2, 3, 4, 6, 10}, 6);
     ordered_array_set resSet = ordered_array_set_symmetricDifference(set1, set2);
     ordered_array_set expectedSet = ordered_array_set_create_from_array((int[]) {}, 0);
+
+    assert (ordered_array_set_isEqual(resSet, expectedSet));
+
+    ordered_array_set_delete(set1);
+    ordered_array_set_delete(set2);
+    ordered_array_set_delete(resSet);
+    ordered_array_set_delete(expectedSet);
+}
+
+void test_ordered_array_set_symmetricDifference3() {
+    ordered_array_set set1 = ordered_array_set_create_from_array((int[]) {-12, -11, -1, 0, 4, 3, 7}, 7);
+    ordered_array_set set2 = ordered_array_set_create_from_array((int[]) {-12, -11, -1, 4, 3, 7}, 6);
+    ordered_array_set resSet = ordered_array_set_symmetricDifference(set1, set2);
+    ordered_array_set expectedSet = ordered_array_set_create_from_array((int[]) {0}, 1);
+
     assert (ordered_array_set_isEqual(resSet, expectedSet));
 
     ordered_array_set_delete(set1);
@@ -560,6 +791,7 @@ void test_ordered_array_set_symmetricDifference2() {
 void test_ordered_array_set_symmetricDifference() {
     test_ordered_array_set_symmetricDifference1();
     test_ordered_array_set_symmetricDifference2();
+    test_ordered_array_set_symmetricDifference3();
 }
 
 void test_ordered_array_set_complement1() {
@@ -593,9 +825,24 @@ void test_ordered_array_set_complement2() {
     ordered_array_set_delete(resSet);
 }
 
+void test_ordered_array_set_complement3() {
+    ordered_array_set set1 = ordered_array_set_create_from_array((int[]) {2, 10, 19}, 3);
+    ordered_array_set set2 = ordered_array_set_create_from_array((int[]) {2, 10, 19, 39, 69}, 5);
+    ordered_array_set resSet = ordered_array_set_complement(set1, set2);
+
+    assert(resSet.data[0] == 39);
+    assert(resSet.data[1] == 69);
+    assert(resSet.size == 2);
+
+    ordered_array_set_delete(set1);
+    ordered_array_set_delete(set2);
+    ordered_array_set_delete(resSet);
+}
+
 void test_ordered_array_set_complement() {
     test_ordered_array_set_complement1();
     test_ordered_array_set_complement2();
+    test_ordered_array_set_complement3();
 }
 
 void test() {
